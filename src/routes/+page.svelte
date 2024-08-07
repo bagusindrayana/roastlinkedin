@@ -20,7 +20,6 @@
   const languages = ["Bahasa Indonesia", "English"];
 
   async function getProfile() {
-    profile = null;
     isLoading = true;
     const url = `${backendUrl}/linkedin`;
     try {
@@ -29,7 +28,7 @@
         language: language,
       });
       const data = await response.data;
-      profile = data.biodata.profile;
+      
       await roastProfile(data.biodata);
     } catch (error: any) {
       isLoading = false;
@@ -55,7 +54,7 @@
         biodata: biodata,
         language: language,
       });
-
+      profile = biodata.profile;
       const data = await response.data;
       roastingResult = data.roasting;
     } catch (error: any) {
@@ -166,7 +165,7 @@
             <SvelteMarkdown source={roastingResult} />
           </p>
           <small class="p-2">
-            This is joke, don't take it seriously. Made with ❤️ by Bagood
+            This is joke, don't take it seriously. Made with ❤️ by <b>RoastLinkedin</b>
           </small>
         </div>
         <div class="mt-6">
