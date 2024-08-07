@@ -18,6 +18,7 @@
   const languages = ["Bahasa Indonesia", "English"];
 
   async function getProfile() {
+    isLoading = true;
     const url = `${backendUrl}/linkedin`;
     try {
       const response = await axios.post(url, {
@@ -27,6 +28,7 @@
       const data = await response.data;
       await roastProfile(data.biodata);
     } catch (error: any) {
+      isLoading = false;
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
           roastingResult = "Profile not found";
