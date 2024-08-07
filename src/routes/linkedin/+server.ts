@@ -3,10 +3,11 @@ import { error } from '@sveltejs/kit';
 import { json } from "@sveltejs/kit";
 import { RateLimiter } from 'sveltekit-rate-limiter/server';
 import type { RequestHandler } from './$types';
-import { COOKIES, CRSF_TOKEN, OPENAI_PROXY_URL, OPENAI_MODEL, OPEN_AI_API_KEY } from '$env/static/private';
+import { COOKIES, CRSF_TOKEN } from '$env/static/private';
+import { dev } from '$app/environment';
 const limiter = new RateLimiter({
     // A rate is defined as [number, unit]
-    IP: [20, 'm'], // IP address limiter
+    IP: [15, 'm'], // IP address limiter
     IPUA: [10, 'm'], // IP + User Agent limiter
 });
 
@@ -124,6 +125,26 @@ function extractInclude(includes: any[]) {
 }
 
 export const POST: RequestHandler = async (event) => {
+    const allowedOrigins = ['https://roastlinkedin.vercel.app', 'roastlinkedin.vercel.app'];
+    const origin = event.request.headers.get('origin');
+    const headersCors: {
+        'Access-Control-Allow-Methods': string;
+        'Access-Control-Allow-Headers': string;
+        'Access-Control-Allow-Origin'?: string;
+    } = {
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    };
+
+    if(dev){
+        headersCors['Access-Control-Allow-Origin'] = '*';
+    } else {
+        if (!allowedOrigins.includes(origin ?? '')) {
+            error(403, 'Forbidden');
+        } else {
+            headersCors['Access-Control-Allow-Origin'] = origin!;
+        }
+    }
     //limit request
     if (await limiter.isLimited(event)) {
         error(429);
