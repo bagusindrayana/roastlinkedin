@@ -208,7 +208,7 @@ export const POST: RequestHandler = async (event) => {
         }
 
         const client = new OpenAI({
-            apiKey: OPEN_AI_API_KEY,
+            apiKey: OPEN_AI_API_KEY != "NULL" ? OPEN_AI_API_KEY : "",
             baseURL: OPENAI_PROXY_URL ?? 'https://api.openai.com',
         });
 
@@ -216,7 +216,6 @@ export const POST: RequestHandler = async (event) => {
             messages: [{ role: 'user', content: prompt }],
             model: OPENAI_MODEL ?? 'gpt-4o-mini',
         });
-        console.log(chatCompletion);
         const data = chatCompletion.choices[0];
 
         
