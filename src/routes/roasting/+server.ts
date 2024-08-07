@@ -57,9 +57,9 @@ export const POST: RequestHandler = async (event) => {
     const language = body.language;
     try {
        
-        let prompt = "roasting, ejek dan kata-katain  dengan kejam, menyakitkan hati dan menyindir untuk profil linkedin berikut gaunakan bahasa informal dan gunakan emotikon atau emoji bila perlu , " + infoIndo(biodata) + ". (hanya berikan response dengan singkat dalam bahasa indonesia. jangan gunakan tulisan/huruf china, jepang, arab, india dan thailand, hanya gunakan tulisan/huruf latin. jangan berikan pujian atau saran. berikan response kurang dari 100 kata. jangan mention nama-nama negara seperti (Rusia, China, Ukraina, Israel, Palestina, dll))";
+        let prompt = "berikan roasting singkat dengan kejam,menyindir, serta menyakitkan dalam bahasa gaul untuk profile linkedin berikut : " + infoIndo(biodata) + ". (hanya berikan response dengan singkat dalam bahasa indonesia. jangan berikan pujian atau saran. berikan response kurang dari 100 kata.)";
         if (language == "English") {
-            prompt = "roast linkedin profile below with harshly and sarcastic with slang language and use emoticon if needed, " + infoInggris(biodata) + ". (only give short response with english language . dont give praise or advice. give response less than 100 words. dont mention country names like (Russia, China, Ukraine, Israle, Palestine, etc))";
+            prompt = "give a short and harsh roasting for the following linkedin profile  " + infoInggris(biodata) + ". (only give short response with english language . dont give praise or advice. give response less than 100 words)";
         }
 
         const client = new OpenAI({
@@ -82,6 +82,8 @@ export const POST: RequestHandler = async (event) => {
         return json({
             roasting: data.message.content,
             biodata: biodata
+        },{
+            headers: headersCors
         });
 
     } catch (error: any) {
