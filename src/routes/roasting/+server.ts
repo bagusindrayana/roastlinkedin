@@ -26,7 +26,7 @@ function infoInggris(biodata: any) {
 }
 
 export const POST: RequestHandler = async (event) => {
-    const allowedOrigins = ['https://roastlinkedin.vercel.app', 'roastlinkedin.vercel.app','roastwaifu.my.id','https://roastwaifu.my.id'];
+    const allowedOrigins = ['https://roastlinkedin.vercel.app', 'roastlinkedin.vercel.app','roastlinkedin.my.id','https://roastlinkedin.my.id'];
     const origin = event.request.headers.get('origin');
     const headersCors: {
         'Access-Control-Allow-Methods': string;
