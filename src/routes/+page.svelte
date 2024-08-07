@@ -36,6 +36,8 @@
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
           roastingResult = "Profile not found";
+        } else if (error.response?.status === 429) {
+          roastingResult = "Too many request, please try again later";
         } else {
           roastingResult = error.response?.data.message;
         }
@@ -63,6 +65,8 @@
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 504) {
           roastingResult = "Response timeout, please try again";
+        } else if (error.response?.status === 429) {
+          roastingResult = "Too many request, please try again later";
         } else {
           roastingResult = error.response?.data.message;
         }
