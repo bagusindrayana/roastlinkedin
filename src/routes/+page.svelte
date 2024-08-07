@@ -17,12 +17,28 @@
 
   const languages = ["Bahasa Indonesia", "English"];
 
-  async function roastProfile() {
+
+  async function getProfile(){
+    const url = `${backendUrl}/linkedin`;
+    try {
+      const response = await axios.post(url, {
+        link: linkedinUrl,
+        language: language,
+      });
+      const data = await response.data;
+      await roastProfile(data.biodata);
+    } catch (error: any) {
+      roastingResult = error.message;
+      console.error("Error get profile:", error);
+    }
+  }
+
+  async function roastProfile(biodata: any) {
     isLoading = true;
     const url = `${backendUrl}/roasting`;
     try {
       const response = await axios.post(url, {
-        link: linkedinUrl,
+        biodata: biodata,
         language: language,
       });
 
@@ -88,7 +104,7 @@
         LinkedIn Profile Roasting 🔥
       </h1>
 
-      <form on:submit|preventDefault={roastProfile} class="mb-5">
+      <form on:submit|preventDefault={getProfile} class="mb-5">
         <div class="mb-4">
           <input
             bind:value={linkedinUrl}
