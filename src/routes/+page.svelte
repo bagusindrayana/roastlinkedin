@@ -3,7 +3,7 @@
   import axios from "axios";
   import SvelteMarkdown from "svelte-markdown";
   import { onMount } from "svelte";
-  import html2canvas from 'html2canvas';
+  import html2canvas from "html2canvas";
 
   let backendUrl = "";
 
@@ -17,8 +17,7 @@
 
   const languages = ["Bahasa Indonesia", "English"];
 
-
-  async function getProfile(){
+  async function getProfile() {
     const url = `${backendUrl}/linkedin`;
     try {
       const response = await axios.post(url, {
@@ -28,7 +27,16 @@
       const data = await response.data;
       await roastProfile(data.biodata);
     } catch (error: any) {
-      roastingResult = error.message;
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 404) {
+          roastingResult = "Profile not found";
+        } else {
+          roastingResult = error.response?.data.message;
+        }
+      } else {
+        roastingResult = error.message;
+      }
+
       console.error("Error get profile:", error);
     }
   }
@@ -45,18 +53,26 @@
       const data = await response.data;
       roastingResult = data.roasting;
     } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 504) {
+          roastingResult = "Response timeout, please try again";
+        } else {
+          roastingResult = error.response?.data.message;
+        }
+      } else {
+        roastingResult = error.message;
+      }
       console.error("Error roasting Linkedin:", error);
-      roastingResult = error.message;
     }
     isLoading = false;
   }
 
   function downloadResult() {
-    const resultDiv = document.getElementById('result') as HTMLElement;
-    html2canvas(resultDiv).then(canvas => {
-      const link = document.createElement('a');
-      link.href = canvas.toDataURL('image/png');
-      link.download = 'result.png';
+    const resultDiv = document.getElementById("result") as HTMLElement;
+    html2canvas(resultDiv).then((canvas) => {
+      const link = document.createElement("a");
+      link.href = canvas.toDataURL("image/png");
+      link.download = "result.png";
       link.click();
     });
   }
@@ -136,20 +152,28 @@
       </form>
 
       {#if roastingResult}
-        <div class="mt-6" >
+        <div class="mt-6">
           <h2 class="text-xl font-semibold mb-3">Roasting Result</h2>
           <p class="text-gray-700 bg-gray-100 p-4 rounded-md" id="result">
             <SvelteMarkdown source={roastingResult} />
           </p>
         </div>
-        <div class="mt-6 ">
+        <div class="mt-6">
           <button
             class="w-full flex gap-1 justify-center items-center bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50"
             on:click={downloadResult}
           >
-          <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><path fill="currentColor" d="M376 160H272v153.37l52.69-52.68a16 16 0 0 1 22.62 22.62l-80 80a16 16 0 0 1-22.62 0l-80-80a16 16 0 0 1 22.62-22.62L240 313.37V160H136a56.06 56.06 0 0 0-56 56v208a56.06 56.06 0 0 0 56 56h240a56.06 56.06 0 0 0 56-56V216a56.06 56.06 0 0 0-56-56M272 48a16 16 0 0 0-32 0v112h32Z"/></svg> 
-          <span>Download Result</span>
-          
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="2em"
+              height="2em"
+              viewBox="0 0 512 512"
+              ><path
+                fill="currentColor"
+                d="M376 160H272v153.37l52.69-52.68a16 16 0 0 1 22.62 22.62l-80 80a16 16 0 0 1-22.62 0l-80-80a16 16 0 0 1 22.62-22.62L240 313.37V160H136a56.06 56.06 0 0 0-56 56v208a56.06 56.06 0 0 0 56 56h240a56.06 56.06 0 0 0 56-56V216a56.06 56.06 0 0 0-56-56M272 48a16 16 0 0 0-32 0v112h32Z"
+              /></svg
+            >
+            <span>Download Result</span>
           </button>
         </div>
       {/if}
