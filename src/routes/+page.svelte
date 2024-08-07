@@ -15,9 +15,12 @@
   let showAlert = true;
   let progress = 0;
 
+  let profile: any | null = null;
+
   const languages = ["Bahasa Indonesia", "English"];
 
   async function getProfile() {
+    profile = null;
     isLoading = true;
     const url = `${backendUrl}/linkedin`;
     try {
@@ -26,6 +29,7 @@
         language: language,
       });
       const data = await response.data;
+      profile = data.biodata.profile;
       await roastProfile(data.biodata);
     } catch (error: any) {
       isLoading = false;
@@ -154,11 +158,16 @@
       </form>
 
       {#if roastingResult}
-        <div class="mt-6">
-          <h2 class="text-xl font-semibold mb-3">Roasting Result</h2>
-          <p class="text-gray-700 bg-gray-100 p-4 rounded-md" id="result">
+        <div class="mt-6" id="result">
+          {#if profile != null}
+            <h2 class="text-xl font-semibold mb-3">Roasting Linkedin <u>{profile.name}</u></h2>
+          {/if}
+          <p class="text-gray-700 bg-gray-100 p-4 rounded-md" >
             <SvelteMarkdown source={roastingResult} />
           </p>
+          <small class="p-2">
+            This is joke, don't take it seriously. Made with ❤️ by Bagood
+          </small>
         </div>
         <div class="mt-6">
           <button
