@@ -32,6 +32,7 @@
       await roastProfile(data.biodata);
     } catch (error: any) {
       isLoading = false;
+      profile = null;
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 404) {
           roastingResult = "Profile not found";
@@ -58,6 +59,7 @@
       const data = await response.data;
       roastingResult = data.roasting;
     } catch (error: any) {
+      profile = null;
       if (axios.isAxiosError(error)) {
         if (error.response?.status === 504) {
           roastingResult = "Response timeout, please try again";
@@ -157,16 +159,18 @@
       </form>
 
       {#if roastingResult}
-        <div class="mt-6" id="result">
+        <div class="my-6" id="result">
           {#if profile != null}
             <h2 class="text-xl font-semibold mb-3">Roasting Linkedin <u>{profile.name}</u></h2>
           {/if}
-          <p class="text-gray-700 bg-gray-100 p-4 rounded-md" >
+          <p class="text-gray-700 bg-gray-100 p-4 rounded-md mb-1" >
             <SvelteMarkdown source={roastingResult} />
           </p>
-          <small class="p-2">
+          <small>
             This is joke, don't take it seriously. Made with ❤️ by <b>RoastLinkedin</b>
           </small>
+          <br>
+          <br>
         </div>
         <div class="mt-6">
           <button

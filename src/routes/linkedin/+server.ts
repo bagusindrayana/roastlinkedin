@@ -37,11 +37,22 @@ const headers = {
 
 function getUserId(link: string) {
     console.log(link);
-    if (!link.includes('http')) {
+    if (link.includes('http')) {
+        const linkSplit = link.split('/');
+        return linkSplit[4];
+    } 
+    if (link.includes('www.linkedin.com')) {
+        const linkSplit = link.split('/');
+        return linkSplit[2];
+    } 
+    if (link.includes('linkedin.com')) {
+        const linkSplit = link.split('/');
+        return linkSplit[2];
+    }
+    else {
         return link;
     }
-    const linkSplit = link.split('/');
-    return linkSplit[4];
+    
 
 }
 
@@ -121,7 +132,6 @@ export const POST: RequestHandler = async (event) => {
     const body = await event.request.json();
     const link = body.link;
     const name = getUserId(link);
-    const language = body.language;
     try {
         const profileData = await getProfile(name);
         if (profileData.included == undefined || profileData.included.length == 0) {
@@ -178,6 +188,12 @@ export const POST: RequestHandler = async (event) => {
                 "experience": experience
             };
         } else {
+            return json({
+                "error": "Profile not found"
+            }, { status: 404 });
+        }
+
+        if(biodata.profile == null){
             return json({
                 "error": "Profile not found"
             }, { status: 404 });

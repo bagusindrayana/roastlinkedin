@@ -40,9 +40,9 @@ export const POST: RequestHandler = async (event) => {
     const language = body.language;
     try {
        
-        let prompt = "roasting, ejek dan kata-katain  dengan kejam, menyakitkan hati dan menyindir untuk profil linkedin berikut gaunakan bahasa informal dan gunakan emotikon atau emoji bila perlu , " + infoIndo(biodata) + ". (hanya berikan response dengan singkat dalam bahasa indonesia serta jangan berikan pujian atau saran. berikan response kurang dari 100 kata. jangan mention nama-nama negara seperti (Rusia, China, Ukraina, Israel, Palestina, dll))";
+        let prompt = "roasting, ejek dan kata-katain  dengan kejam, menyakitkan hati dan menyindir untuk profil linkedin berikut gaunakan bahasa informal dan gunakan emotikon atau emoji bila perlu , " + infoIndo(biodata) + ". (hanya berikan response dengan singkat dalam bahasa indonesia. jangan gunakan tulisan/huruf china, jepang, arab, india dan thailand, hanya gunakan tulisan/huruf latin. jangan berikan pujian atau saran. berikan response kurang dari 100 kata. jangan mention nama-nama negara seperti (Rusia, China, Ukraina, Israel, Palestina, dll))";
         if (language == "English") {
-            prompt = "roast linkedin profile below with harshly and sarcastic with slang language and use emoticon if needed, " + infoInggris(biodata) + ". (only give short response with english language also dont give praise or advice. give response less than 100 words. dont mention country names like (Russia, China, Ukraine, Israle, Palestine, etc))";
+            prompt = "roast linkedin profile below with harshly and sarcastic with slang language and use emoticon if needed, " + infoInggris(biodata) + ". (only give short response with english language . dont give praise or advice. give response less than 100 words. dont mention country names like (Russia, China, Ukraine, Israle, Palestine, etc))";
         }
 
         const client = new OpenAI({
