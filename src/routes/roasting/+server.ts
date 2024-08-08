@@ -57,9 +57,9 @@ export const POST: RequestHandler = async (event) => {
     const language = body.language;
     try {
        
-        let prompt = "berikan roasting singkat dengan kejam,menyindir, serta menyakitkan dalam bahasa gaul untuk profile linkedin berikut : " + infoIndo(biodata) + ". (hanya berikan response dengan singkat dalam bahasa indonesia. jangan berikan pujian atau saran. berikan response kurang dari 100 kata.)";
+        let prompt = "berikan roasting singkat dengan kejam,menyindir, serta menyakitkan dalam bahasa gaul untuk profile linkedin berikut : " + infoIndo(biodata) + ". (hanya berikan response dengan singkat dalam bahasa indonesia. jangan berikan pujian atau saran.)";
         if (language == "English") {
-            prompt = "give a short and harsh roasting for the following linkedin profile  " + infoInggris(biodata) + ". (only give short response with english language . dont give praise or advice. give response less than 100 words)";
+            prompt = "give a short and harsh roasting for the following linkedin profile  " + infoInggris(biodata) + ". (only give short response with english language. dont give praise or advice.)";
         }
 
         const client = new OpenAI({
