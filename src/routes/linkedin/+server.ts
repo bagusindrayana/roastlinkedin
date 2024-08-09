@@ -38,22 +38,25 @@ const headers = {
 
 function getUserId(link: string) {
     console.log(link);
+    let linkResult = link;
     if (link.includes('http')) {
         const linkSplit = link.split('/');
-        return linkSplit[4];
-    } 
-    if (link.includes('www.linkedin.com')) {
+        linkResult = linkSplit[4];
+    } else if (link.includes('www.linkedin.com')) {
         const linkSplit = link.split('/');
-        return linkSplit[2];
-    } 
-    if (link.includes('linkedin.com')) {
+        linkResult = linkSplit[2];
+    } else if (link.includes('linkedin.com')) {
         const linkSplit = link.split('/');
-        return linkSplit[2];
-    }
-    else {
-        return link;
+        linkResult = linkSplit[2];
     }
     
+    //remove query?
+    if(linkResult.includes('?')){
+        const linkSplit = linkResult.split('?');
+        linkResult = linkSplit[0];
+    }
+    
+    return linkResult;
 
 }
 

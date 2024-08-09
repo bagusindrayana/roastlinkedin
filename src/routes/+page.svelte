@@ -34,7 +34,7 @@
       isLoading = false;
       profile = null;
       if (axios.isAxiosError(error)) {
-        if (error.response?.status === 404) {
+        if (error.response?.status === 404 || error.response?.status === 400) {
           roastingResult = "Profile not found";
         } else if (error.response?.status === 429) {
           roastingResult = "Too many request, please try again later";
@@ -162,7 +162,7 @@
         </button>
       </form>
 
-      {#if roastingResult}
+      {#if roastingResult != ""}
         <div class="my-6" id="result">
           {#if profile != null}
             <h2 class="text-xl font-semibold mb-3">Roasting Linkedin <u>{profile.name}</u></h2>
