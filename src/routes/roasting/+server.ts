@@ -61,9 +61,10 @@ export const POST: RequestHandler = async (event) => {
         if (language == "English") {
             prompt = "give a short and harsh roasting for the following linkedin profile  " + infoInggris(biodata) + ". (only give short response with english language. dont give praise or advice.)";
         }
-
+        const apiKeys = OPEN_AI_API_KEY.split(",");
+        const randomapiKey = apiKeys[Math.floor(Math.random() * apiKeys.length)];
         const client = new OpenAI({
-            apiKey: OPEN_AI_API_KEY != "NULL" ? OPEN_AI_API_KEY : "",
+            apiKey: OPEN_AI_API_KEY != "NULL" ? randomapiKey : "",
             baseURL: OPENAI_PROXY_URL ?? 'https://api.openai.com',
         });
 
