@@ -37,7 +37,6 @@ const headers = {
 
 
 function getUserId(link: string) {
-    console.log(link);
     let linkResult = link;
     if (link.includes('http')) {
         const linkSplit = link.split('/');
@@ -55,6 +54,9 @@ function getUserId(link: string) {
         const linkSplit = linkResult.split('?');
         linkResult = linkSplit[0];
     }
+
+    //debug user id result from link
+    console.log("User ID: " + linkResult);
     
     return linkResult;
 
@@ -74,6 +76,7 @@ async function getProfile(name: string | null) {
 }
 
 async function getSkill(entityUrn: string) {
+    //console.log("get skill...");
     const entities = entityUrn.split(':');
     const last = entities[entities.length - 1];
     let config = {
@@ -89,6 +92,7 @@ async function getSkill(entityUrn: string) {
 }
 
 async function getExperience(entityUrn: string) {
+    //console.log("get experience...");
     const entities = entityUrn.split(':');
     const last = entities[entities.length - 1];
     let config = {
@@ -163,7 +167,16 @@ export const POST: RequestHandler = async (event) => {
                 "error": "Profile not found"
             }, { status: 404 });
         }
-        const entityUrn = profileData.included[0].entityUrn;
+        let entityUrn = profileData.included[0].entityUrn;
+
+        for (let i = 0; i < profileData.included.length; i++) {
+            const inc =  profileData.included[i];
+            if((inc.$type == "com.linkedin.voyager.dash.relationships.MemberRelationship" || inc.$type == "com.linkedin.voyager.dash.relationships.DirectionalEntityRelationship") && inc.entityUrn.length > 20){
+                entityUrn = inc.entityUrn;
+                break;
+            }
+            
+        }
         // const profileUrn = await getProfileUrn(entityUrn);
 
         let profile = null
@@ -196,7 +209,8 @@ export const POST: RequestHandler = async (event) => {
         }
 
         let biodata: any = {};
-        if (entityUrn) {
+        if (entityUrn != null && entityUrn != '' && entityUrn != undefined) {
+            //console.log(entityUrn);
             const dataSkills = await getSkill(entityUrn);
             const skills = extractInclude(dataSkills.included);
 
@@ -233,7 +247,7 @@ export const POST: RequestHandler = async (event) => {
                 error: error.response?.data,
             }, { status: error.response?.status });
         }
-        console.log(error);
+        
         return json({
             error: error.message,
         }, { status: 500 });

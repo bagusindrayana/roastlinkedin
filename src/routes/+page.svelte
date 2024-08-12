@@ -8,7 +8,7 @@
   let backendUrl = "";
 
   let linkedinUrl: string = "";
-  let language: string = "Bahasa Indonesia";
+  let language: string = "English";
   let roastingResult: string = "";
   let isLoading = false;
 
@@ -112,10 +112,7 @@
       class="fixed top-0 left-0 w-full bg-white border border-black p-4 z-50 text-center"
     >
       <p class="mb-2">
-        <span class="text-red-500">Peringatan</span>: Ini merupakan website
-        untuk meroatsing/mengejek profile linkedin yang diberikan. Semua hasil
-        roastingan/ejeken dibuat menggunakan AI, harap untuk mengerti dan tidak
-        tersinggung.
+        <span class="text-red-500">Warning</span>: This is a website for roast/mockery the given linkedin profile. All roast/mockery results are made using AI, please understand and do not be offended.
       </p>
       <div class="relative w-full h-1 bg-gray-200 overflow-hidden">
         <div
