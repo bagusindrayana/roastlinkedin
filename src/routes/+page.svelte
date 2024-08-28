@@ -194,27 +194,51 @@
       {/if}
     </div>
   </div>
-  <div class="flex justify-center gap-2 items-center">
-    <a href="https://trakteer.id/bagood" target="_blank"
-      ><img
-        id="wse-buttons-preview"
-        src="https://cdn.trakteer.id/images/embed/trbtn-red-1.png?date=18-11-2023"
-        height="40"
-        style="border: 0px; height: 40px; --darkreader-inline-border-top: 0px; --darkreader-inline-border-right: 0px; --darkreader-inline-border-bottom: 0px; --darkreader-inline-border-left: 0px;"
-        alt="Trakteer Saya"
-        data-darkreader-inline-border-top=""
-        data-darkreader-inline-border-right=""
-        data-darkreader-inline-border-bottom=""
-        data-darkreader-inline-border-left=""
-      /></a
+  <div
+        id="footer"
+        class="fixed left-0 right-0 p-2 flex flex-col gap-2 text-center justify-center w-full bg-white bottom-0"
     >
-    <iframe
-      src="https://ghbtns.com/github-btn.html?user=bagusindrayana&repo=roastlinkedin&type=star&count=true&size=large"
-      frameborder="0"
-      scrolling="0"
-      width="170"
-      height="30"
-      title="GitHub"
-    ></iframe>
-  </div>
+        <div class="flex gap-2 justify-center">
+            <a href="https://wallofdonations.my.id" class="underline"
+            target="_blank">
+            WallOfDonations
+        </a>
+            <a
+                href="https://roastgithub.my.id"
+                class="underline"
+                target="_blank">RoastGithub</a
+            >
+            <a
+                href="https://roastlinkedin.my.id"
+                class="underline"
+                target="_blank">RoastLinkedin</a
+            >
+            <a href="https://roastwaifu.my.id" class="underline" target="_blank"
+                >RoastWaifu</a
+            >
+        </div>
+        <div class="flex justify-center gap-2 items-center">
+            <a href="https://trakteer.id/bagood" target="_blank"
+                ><img
+                    id="wse-buttons-preview"
+                    src="https://cdn.trakteer.id/images/embed/trbtn-red-1.png?date=18-11-2023"
+                    height="40"
+                    style="border: 0px; height: 40px; --darkreader-inline-border-top: 0px; --darkreader-inline-border-right: 0px; --darkreader-inline-border-bottom: 0px; --darkreader-inline-border-left: 0px;"
+                    alt="Trakteer Saya"
+                    data-darkreader-inline-border-top=""
+                    data-darkreader-inline-border-right=""
+                    data-darkreader-inline-border-bottom=""
+                    data-darkreader-inline-border-left=""
+                /></a
+            >
+            <iframe
+                src="https://ghbtns.com/github-btn.html?user=bagusindrayana&repo=roastlinkedin&type=star&count=true&size=large"
+                frameborder="0"
+                scrolling="0"
+                width="170"
+                height="30"
+                title="GitHub"
+            ></iframe>
+        </div>
+    </div>
 </main>
