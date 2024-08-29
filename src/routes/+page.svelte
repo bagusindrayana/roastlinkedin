@@ -194,6 +194,8 @@
       {/if}
     </div>
   </div>
+  <div style="height: 100px;">
+    </div>
   <div
         id="footer"
         class="fixed left-0 right-0 p-2 flex flex-col gap-2 text-center justify-center w-full bg-white bottom-0"
