@@ -27,7 +27,7 @@ const headers = {
     'sec-fetch-dest': 'empty',
     'sec-fetch-mode': 'cors',
     'sec-fetch-site': 'same-origin',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0',
+    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
     'x-li-lang': 'in_ID',
     'x-li-page-instance': 'urn:li:page:d_flagship3_profile_view_base_skills_details;TttQY4DTS7uz+mSndtcOhQ==',
     'x-li-pem-metadata': 'Voyager - Profile=view-skills-details',
@@ -164,10 +164,12 @@ export const POST: RequestHandler = async (event) => {
         const profileData = await getProfile(name);
         if (profileData.included == undefined || profileData.included.length == 0) {
             return json({
-                "error": "Profile not found"
+                "error": "Profile not found : 01"
             }, { status: 404 });
         }
         let entityUrn = profileData.included[0].entityUrn;
+
+        //console.log(entityUrn);
 
         for (let i = 0; i < profileData.included.length; i++) {
             const inc =  profileData.included[i];
@@ -177,6 +179,8 @@ export const POST: RequestHandler = async (event) => {
             }
             
         }
+
+        // console.log(entityUrn);
         // const profileUrn = await getProfileUrn(entityUrn);
 
         let profile = null
@@ -225,15 +229,24 @@ export const POST: RequestHandler = async (event) => {
                 "skills": skills,
                 "experience": experience
             };
-        } else {
+        } 
+        else if(profile != null){
+            biodata = {
+                "profile": profile,
+                "education": education,
+            };
+        }
+        else {
             return json({
-                "error": "Profile not found"
+                "error": "Profile not found : 02"
             }, { status: 404 });
         }
 
-        if(biodata.profile == null){
+        // console.log(biodata);
+
+        if(biodata.profile == undefined || biodata.profile == null){
             return json({
-                "error": "Profile not found"
+                "error": "Profile not found : 03"
             }, { status: 404 });
         }
         
